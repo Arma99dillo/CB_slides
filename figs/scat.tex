@@ -1,0 +1,31 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{decorations.pathreplacing,matrix,calc,arrows,shapes.geometric}
+
+\begin{document}
+	\begin{tikzpicture}
+	
+	% Draw the circle (scatterer)
+	\draw[thick] (0,0) circle (1cm);
+	
+	% Draw the incoming wave (plane wave)
+	\foreach \y in {-1,-0.5,...,1} {
+		\draw[thick, ->, domain=-4:-1.23, samples=50, smooth, variable=\x] plot (\x, \y + 0.2 * sin(2 * pi * \x r));
+	}
+	
+	% Draw the scattered waves (radial waves)
+	\foreach \angle in {-80,-60,...,80} {
+		\draw[thick, ->, domain=1.1:2.5, samples=50, smooth, variable=\r] plot ({\r * cos(\angle)}, {\r * sin(\angle)});
+	}
+	
+	% Add labels
+	\node at (-2.5, 1.5) {$u^\mathrm{inc}$};
+	\node at (1.7, 2.7) {$u^\mathrm{scat}$};
+	\node at (0, 0) {$D$};
+	
+	\end{tikzpicture}
+\end{document}
